@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.use(teamRouter);
 app.use(userRouter);
-app.use(churchRouter)
+app.use(churchRouter);
 
 app.get('/', (req, res) => res.send('booo'));
 
