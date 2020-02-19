@@ -1,0 +1,9 @@
+{
+  "prettier.configPath": ".prettierrc",
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/14dec7e2-5122-496f-97da-053d57d6a593/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/raffle-app-server",
+  "appService.deploySubpath": "server"
+}

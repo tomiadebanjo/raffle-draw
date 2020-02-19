@@ -1,0 +1,34 @@
+{
+  "name": "raffle-draw-server",
+  "version": "1.0.0",
+  "description": "raffle draw",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "heroku-postbuild": "yarn build",
+    "lint": "node_modules/.bin/eslint ./src",
+    "lint:fix": "yarn lint --fix",
+    "serve": "node dist",
+    "start": "yarn serve",
+    "start:dev": "nodemon --exec babel-node src"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.1"
+  }
+}

@@ -1,0 +1,49 @@
+.form-section {
+  margin-top: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  // color: #673ab7;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10vw 3rem;
+}
+
+.inner-container {
+  margin: 0 auto;
+
+  @media screen and (min-width: 800px) {
+    width: 40vw;
+  }
+}
+
+.mat-card-title {
+  color: #673ab7;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin-bottom: 1rem;
+  }
+}
+
+.form-control {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin: 1.5rem 0;
+  }
+}
