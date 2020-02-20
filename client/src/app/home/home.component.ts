@@ -12,6 +12,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 
   // navigateToForm() {
-  //   this.router.navigate(['/raffle/apply']);
+  //   this.router.navigate(['/apply']);
   // }
 }

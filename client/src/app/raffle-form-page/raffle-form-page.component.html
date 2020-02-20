@@ -22,8 +22,13 @@
       </mat-card-content>
     </mat-card>
 
+    <mat-card *ngIf="churchListLoading" class="loading-section">
+      <mat-spinner [color]="color" [mode]="mode" [value]="value" diameter="70">
+      </mat-spinner>
+    </mat-card>
+
     <!-- <h2></h2> -->
-    <mat-card class="form-section">
+    <mat-card class="form-section" *ngIf="!churchListLoading">
       <mat-card-header>
         <mat-card-title>Fill in your information</mat-card-title>
       </mat-card-header>
@@ -60,7 +65,11 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-control">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="John doe" formControlName="email" />
+            <input
+              matInput
+              placeholder="user@email.com"
+              formControlName="email"
+            />
             <mat-error
               *ngIf="
                 raffleForm.controls.email.hasError('email') &&
@@ -77,7 +86,7 @@
             <mat-label>Phone Number</mat-label>
             <input
               matInput
-              placeholder="John doe"
+              placeholder="08099991111"
               formControlName="phoneNumber"
             />
             <mat-error
@@ -95,9 +104,9 @@
             <mat-label>Select your church</mat-label>
             <mat-select formControlName="church">
               <!-- <mat-label>Select your church</mat-label> -->
-              <mat-option>None</mat-option>
+              <!-- <mat-option>None</mat-option> -->
               <mat-option
-                *ngFor="let church of churchList | async"
+                *ngFor="let church of churchList"
                 [value]="church._id"
               >
                 {{ church.name }}

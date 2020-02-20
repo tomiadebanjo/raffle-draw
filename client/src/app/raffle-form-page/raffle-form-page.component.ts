@@ -23,6 +23,7 @@ export class RaffleFormPageComponent implements OnInit {
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
   errorMessage: string;
+  churchListLoading = true;
 
   raffleForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -39,7 +40,10 @@ export class RaffleFormPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.churchList = this.appService.getChurchList();
+    this.appService.getChurchList().subscribe(response => {
+      this.churchList = response;
+      this.churchListLoading = false;
+    });
   }
 
   // log(val) {
@@ -55,10 +59,7 @@ export class RaffleFormPageComponent implements OnInit {
       data => {
         console.log(data, 'response data');
         this.submitDataLoading = false;
-        this.router.navigate([
-          '/raffle/submission',
-          this.raffleForm.value.email
-        ]);
+        this.router.navigate(['/details', this.raffleForm.value.email]);
       },
       error => {
         this.submitDataLoading = false;

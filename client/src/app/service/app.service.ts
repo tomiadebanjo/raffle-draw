@@ -17,6 +17,7 @@ interface UserDetailResponse {
 })
 export class AppService {
   constructor(private http: HttpClient) {}
+  // url = 'http://localhost:4000';
   url = 'https://raffle-app-server.azurewebsites.net';
 
   getChurchList() {

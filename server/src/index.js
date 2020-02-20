@@ -7,15 +7,13 @@ dotenv.config();
 
 const server = http.createServer(app);
 const port = process.env.PORT || 8900;
+const DATABASE_URL = process.env.DATABASE_URL;
 
 const connect = () => {
-  return mongoose.connect(
-    'mongodb+srv://raffle-tom:raffle-tom-pass123@clusterraffle-edtap.mongodb.net/test?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  );
+  return mongoose.connect(DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 };
 
 connect()
