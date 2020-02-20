@@ -20,7 +20,7 @@ const userController = {
           i._id.equals(churchData.lastSelectedTeam)
         );
         const newTeamIndex =
-          lastTeamIndex + 1 > teams.length ? 0 : lastTeamIndex + 1;
+          lastTeamIndex + 1 > teams.length - 1 ? 0 : lastTeamIndex + 1;
 
         churchData.lastSelectedTeam = teams[newTeamIndex]._id;
         await churchData.save();
@@ -37,22 +37,36 @@ const userController = {
 
       const userInfo = await userData
         .populate({ path: 'church', populate: { path: 'lastSelectedTeam' } })
+        .populate('team')
         .execPopulate();
       return res.status(200).json(userInfo);
     } catch (error) {
-      res.status(500).json({ message: error.message, success: false });
       console.log(error, 'user creation failed');
+      res.status(500).json({ message: error.message, success: false });
     }
   },
   get: async (req, res) => {
     try {
-      const users = await User.find()
-        .populate({ path: 'church', populate: { path: 'lastSelectedTeam' } })
-        .populate('team');
+      const userInfo = await User.findOne({
+        $or: [{ email: req.params.email }, { phoneNumber: req.params.email }]
+      })
+        .populate({ path: 'church' })
+        .populate('team')
+        .exec();
 
-      res.status(200).json(users);
+      console.log(userInfo);
+
+      if (!userInfo) {
+        return res
+          .status(404)
+          .json({ success: false, message: 'User not Found' });
+      }
+
+      res
+        .status(200)
+        .json({ success: true, message: 'User Found', data: userInfo });
     } catch (error) {
-      res.status(400).json({ message: 'failes' });
+      res.status(500).json({ message: 'Something went wrong while fetching' });
       console.log(error, 'user fetching failed');
     }
   }

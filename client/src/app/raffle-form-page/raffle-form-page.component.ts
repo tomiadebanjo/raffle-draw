@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { Validators, FormBuilder } from '@angular/forms';
 import { AppService } from '../service/app.service';
-import { map } from 'rxjs/operators';
-import { Church } from '../models/church';
+
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 
 interface Food {
   value: string;
@@ -18,16 +17,12 @@ interface Food {
   styleUrls: ['./raffle-form-page.component.scss']
 })
 export class RaffleFormPageComponent implements OnInit {
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' }
-  ];
   churchList;
-  submitDataLoading: true;
+  submitDataLoading = false;
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
+  errorMessage: string;
 
   raffleForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -37,17 +32,40 @@ export class RaffleFormPageComponent implements OnInit {
     church: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private appService: AppService) {}
+  constructor(
+    private fb: FormBuilder,
+    private appService: AppService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.churchList = this.appService.getChurchList();
   }
 
-  log(val) {
-    console.log(val);
-  }
+  // log(val) {
+  //   console.log(val);
+  // }
 
   onSubmit() {
-    console.log(this.raffleForm.value);
+    // console.log(this.raffleForm.value);
+    // this.errorMessage = 'Something went wrong. Try again!';
+    this.submitDataLoading = true;
+    this.errorMessage = '';
+    this.appService.createUser(this.raffleForm.value).subscribe(
+      data => {
+        console.log(data, 'response data');
+        this.submitDataLoading = false;
+        this.router.navigate([
+          '/raffle/submission',
+          this.raffleForm.value.email
+        ]);
+      },
+      error => {
+        this.submitDataLoading = false;
+
+        this.errorMessage = error;
+        console.log(error);
+      }
+    );
   }
 }

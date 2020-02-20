@@ -16,6 +16,8 @@
         <ul>
           <li>You will be disqualified if you are not present at the venue</li>
           <li>You can only enter the raffle once</li>
+          <li>You can not use the same email address more than once</li>
+          <li>You can not use the same phone number more than once</li>
         </ul>
       </mat-card-content>
     </mat-card>
@@ -90,8 +92,10 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-control">
-            <mat-label>Church</mat-label>
+            <mat-label>Select your church</mat-label>
             <mat-select formControlName="church">
+              <!-- <mat-label>Select your church</mat-label> -->
+              <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let church of churchList | async"
                 [value]="church._id"
@@ -99,24 +103,28 @@
                 {{ church.name }}
               </mat-option>
             </mat-select>
-            <mat-hint>Select your church</mat-hint>
             <mat-error *ngIf="raffleForm.controls.church.hasError('required')">
               Church is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
           <div class="button-container">
-            <button mat-raised-button color="accent" type="submit">
+            <p class="error-message">{{ errorMessage }}</p>
+            <button
+              mat-raised-button
+              color="accent"
+              type="submit"
+              [disabled]="!raffleForm.valid"
+            >
               <span *ngIf="!submitDataLoading">
                 Enter Raffle Draw
               </span>
-              bou
               <mat-spinner
-                class="example-margin"
                 [color]="color"
                 [mode]="mode"
                 [value]="value"
                 *ngIf="submitDataLoading"
+                diameter="30"
               >
               </mat-spinner>
             </button>

@@ -7,7 +7,7 @@ import { RaffleSubmissionPageComponent } from './raffle-submission-page/raffle-s
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'raffle/apply', component: RaffleFormPageComponent },
-  { path: 'raffle/submission', component: RaffleSubmissionPageComponent }
+  { path: 'raffle/submission/:email', component: RaffleSubmissionPageComponent }
 ];
 
 @NgModule({

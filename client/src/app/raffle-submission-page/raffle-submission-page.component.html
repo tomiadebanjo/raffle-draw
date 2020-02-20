@@ -1,1 +1,47 @@
-<p>raffle-submission-page works!</p>
+<div class="container">
+  <mat-spinner
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+    *ngIf="userDetailsLoading"
+    diameter="70"
+  >
+  </mat-spinner>
+  <mat-card *ngIf="errorMessage.length > 0">
+    <p>
+      User not found! Put a valid email address or phone number in the Url. e.g
+    </p>
+  </mat-card>
+  <mat-card
+    class="details-container"
+    *ngIf="!userDetailsLoading && errorMessage.length === 0"
+  >
+    <mat-card-header>
+      <mat-card-title class="title">Entry submission successful</mat-card-title>
+      <mat-card-subtitle class="subtitle"
+        >Save the details below. You will use it to claim your
+        prize</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <div class="info-control">
+        <p class="info-control--title">Name:</p>
+        <p class="info-control--content">{{ userDetails.name }}</p>
+      </div>
+      <div class="info-control">
+        <p class="info-control--title">Church:</p>
+        <p class="info-control--content">{{ userDetails.church }}</p>
+      </div>
+      <div class="info-control">
+        <p class="info-control--title">Team:</p>
+        <p class="info-control--content">{{ userDetails.team }}</p>
+      </div>
+      <p class="good-luck">Good Luck!</p>
+    </mat-card-content>
+  </mat-card>
+  <img
+    src="https://res.cloudinary.com/dyytydd9j/image/upload/v1582154109/PHOTO-2020-02-17-20-05-27_daal4i.jpg"
+    alt="event banner"
+    class="image-banner"
+  />
+</div>
