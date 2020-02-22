@@ -5,11 +5,38 @@ import { catchError, map } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { Church } from '../models/church';
 import { User } from '../models/user';
+import { Team } from '../models/team';
 
 interface UserDetailResponse {
   success: boolean;
   message: string;
   data: User;
+}
+
+interface AllUsersResponse {
+  message: string;
+  data: User[];
+  count: number;
+}
+
+interface Data {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  team: string;
+  church: string;
+  churchData: Church[];
+  teamData: Team[];
+  createdAt: string;
+  updatedAt: string;
+  _v: number;
+}
+
+interface UserWinnerResponse {
+  message: string;
+  data: Data[];
 }
 
 @Injectable({
@@ -43,6 +70,30 @@ export class AppService {
   getUserDetails(id: string) {
     return this.http
       .get<UserDetailResponse>(`${this.url}/user/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getWinner() {
+    return this.http
+      .get<UserWinnerResponse>(`${this.url}/user/winner`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllUsers() {
+    return this.http
+      .get<AllUsersResponse>(`${this.url}/user`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllUsersByChurch(churchId: string) {
+    return this.http
+      .get<AllUsersResponse>(`${this.url}/user/church/${churchId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllUsersByTeam(teamId: string) {
+    return this.http
+      .get<AllUsersResponse>(`${this.url}/user/team/${teamId}`)
       .pipe(catchError(this.handleError));
   }
 

@@ -15,13 +15,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RaffleWinnerComponent } from './raffle-winner/raffle-winner.component';
+import { RaffleUsersComponent } from './raffle-users/raffle-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RaffleSubmissionPageComponent,
-    RaffleFormPageComponent
+    RaffleFormPageComponent,
+    RaffleWinnerComponent,
+    RaffleUsersComponent
   ],
   imports: [
     BrowserModule,
