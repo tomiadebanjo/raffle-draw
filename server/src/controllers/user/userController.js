@@ -69,6 +69,85 @@ const userController = {
       res.status(500).json({ message: 'Something went wrong while fetching' });
       console.log(error, 'user fetching failed');
     }
+  },
+  randomPicker: async (req, res) => {
+    try {
+      const winnerData = await User.aggregate([
+        { $sample: { size: 1 } },
+        {
+          $lookup: {
+            from: 'churches',
+            localField: 'church',
+            foreignField: '_id',
+            as: 'churchData'
+          }
+        },
+        {
+          $lookup: {
+            from: 'teams',
+            localField: 'team',
+            foreignField: '_id',
+            as: 'teamData'
+          }
+        }
+      ]);
+
+      return res
+        .status(200)
+        .json({ message: 'Successful Winner', data: winnerData });
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong while fetching' });
+      console.log(error, 'user fetching failed');
+    }
+  },
+  getAllUsers: async (req, res) => {
+    try {
+      const allUsers = await User.find({})
+        .populate({ path: 'church' })
+        .populate('team')
+        .exec();
+
+      return res
+        .status(200)
+        .json({ message: 'All Users', data: allUsers, count: allUsers.length });
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong while fetching' });
+      console.log(error, 'user fetching failed');
+    }
+  },
+  getUsersByChurch: async (req, res) => {
+    try {
+      const allUsers = await User.find({ church: req.params.church })
+        .populate({ path: 'church' })
+        .populate('team')
+        .exec();
+
+      return res.status(200).json({
+        message: 'All Users',
+        data: allUsers,
+        count: allUsers.length
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong while fetching' });
+      console.log(error, 'user fetching failed');
+    }
+  },
+  getUsersByTeam: async (req, res) => {
+    try {
+      const allUsers = await User.find({ team: req.params.team })
+        .populate({ path: 'church' })
+        .populate('team')
+        .exec();
+
+      return res.status(200).json({
+        message: 'All Users',
+        data: allUsers,
+        count: allUsers.length
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong while fetching' });
+      console.log(error, 'user fetching failed');
+    }
   }
 };
 
